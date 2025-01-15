@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://d37bnkq58wnef"]
+[gd_scene load_steps=10 format=3 uid="uid://d37bnkq58wnef"]
 
 [ext_resource type="Texture2D" uid="uid://noc6o5nkhrxv" path="res://tileset/game_tilesets_1.png" id="1_1hxs3"]
 [ext_resource type="Texture2D" uid="uid://dff8cwdlysum5" path="res://tileset/game_tilesets_props.png" id="2_ea3pe"]
 [ext_resource type="PackedScene" uid="uid://c8qgjq7p7r7b5" path="res://player/player.tscn" id="2_v30vc"]
 [ext_resource type="Texture2D" uid="uid://3vd6425abdhd" path="res://tileset/game_tilesets_walls.png" id="3_wh7xg"]
+[ext_resource type="Script" path="res://levels/player_camera_2d.gd" id="5_v5lrl"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bqmwq"]
 texture = ExtResource("1_1hxs3")
@@ -290,4 +291,7 @@ layer_2/z_index = 1
 [node name="Player" parent="." instance=ExtResource("2_v30vc")]
 position = Vector2(48, -85)
 
-[node name="Camera2D" type="Camera2D" parent="Player"]
+[node name="PlayerCamera2D" type="Camera2D" parent="." node_paths=PackedStringArray("player")]
+position = Vector2(48, -85)
+script = ExtResource("5_v5lrl")
+player = NodePath("../Player")

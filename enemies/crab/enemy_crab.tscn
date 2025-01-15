@@ -1,8 +1,8 @@
 [gd_scene load_steps=15 format=3 uid="uid://bseeutmrr58ix"]
 
-[ext_resource type="Texture2D" uid="uid://5k48drtt56o8" path="res://enemies/crab-idle.png" id="1_3bitr"]
-[ext_resource type="Script" path="res://enemies/enemy_crab.gd" id="1_6bjnc"]
-[ext_resource type="Texture2D" uid="uid://btj4v2eyhsumr" path="res://enemies/crab-walk.png" id="2_e56vw"]
+[ext_resource type="Texture2D" uid="uid://5k48drtt56o8" path="res://enemies/crab/crab-idle.png" id="1_3bitr"]
+[ext_resource type="Script" path="res://enemies/crab/enemy_crab.gd" id="1_6bjnc"]
+[ext_resource type="Texture2D" uid="uid://btj4v2eyhsumr" path="res://enemies/crab/crab-walk.png" id="2_e56vw"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hsk3x"]
 atlas = ExtResource("1_3bitr")
@@ -84,7 +84,9 @@ radius = 13.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_31kmv"]
 radius = 15.0
 
-[node name="EnemyCrab" type="CharacterBody2D"]
+[node name="EnemyCrab" type="CharacterBody2D" groups=["Enemy"]]
+collision_layer = 4
+collision_mask = 3
 script = ExtResource("1_6bjnc")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

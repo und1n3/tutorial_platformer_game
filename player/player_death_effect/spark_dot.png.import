@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://5k48drtt56o8"
-path="res://.godot/imported/crab-idle.png-857de422ba4574c9250b22545fd067be.ctex"
+uid="uid://bv8rggid4m6ev"
+path="res://.godot/imported/spark_dot.png-f6fbf84381bbdcf0aa82328b5bf552bf.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://enemies/crab-idle.png"
-dest_files=["res://.godot/imported/crab-idle.png-857de422ba4574c9250b22545fd067be.ctex"]
+source_file="res://player/player_death_effect/spark_dot.png"
+dest_files=["res://.godot/imported/spark_dot.png-f6fbf84381bbdcf0aa82328b5bf552bf.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://btj4v2eyhsumr"
-path="res://.godot/imported/crab-walk.png-cc054debb7bc94ae8516da019b5447c6.ctex"
+uid="uid://btslh7set13ee"
+path="res://.godot/imported/spark.png-3c83509f5d88037e92818e32f57d58e2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://enemies/crab-walk.png"
-dest_files=["res://.godot/imported/crab-walk.png-cc054debb7bc94ae8516da019b5447c6.ctex"]
+source_file="res://player/player_death_effect/spark.png"
+dest_files=["res://.godot/imported/spark.png-3c83509f5d88037e92818e32f57d58e2.ctex"]
 
 [params]
 

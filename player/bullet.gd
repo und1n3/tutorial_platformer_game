@@ -16,12 +16,10 @@ func _on_timer_timeout():
 
 func _on_hitbox_area_entered(area):
 	bullet_impact()
-	print("Bullet area entered")
 
 
 func _on_hitbox_body_entered(body):
 	bullet_impact()
-	print("Bullet body entered")
 	
 func get_damage_amount() -> int:
 	return damage_amount
