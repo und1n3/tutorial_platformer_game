@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://7r37l1gsbwn7"]
+[gd_scene load_steps=8 format=3 uid="uid://7r37l1gsbwn7"]
 
 [ext_resource type="PackedScene" uid="uid://d37bnkq58wnef" path="res://levels/base_level.tscn" id="1_ddqmr"]
 [ext_resource type="PackedScene" uid="uid://c78iqt8408cx7" path="res://background/parallax_background.tscn" id="2_jyxmq"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://w6fka84tekwq" path="res://enemies/dino/enemy_dino.tscn" id="3_rpjpe"]
 [ext_resource type="PackedScene" uid="uid://bseeutmrr58ix" path="res://enemies/crab/enemy_crab.tscn" id="4_qb2f8"]
 [ext_resource type="PackedScene" uid="uid://dyr2rpkuhv667" path="res://ui/game_screen.tscn" id="5_w5fau"]
+[ext_resource type="PackedScene" uid="uid://c5yqfatejncil" path="res://collectibles/blue_coin/blue_coin.tscn" id="7_xiqq2"]
 
 [node name="TestLevel" instance=ExtResource("1_ddqmr")]
 
@@ -19,10 +20,12 @@ layer_0/tile_data = PackedInt32Array(-131072, 983040, 8, -65536, 983040, 8, -131
 [node name="HealthPickup" parent="Pickups" index="0" instance=ExtResource("3_3bkew")]
 position = Vector2(281, -83)
 
-[node name="EnemyDino" parent="." index="4" instance=ExtResource("3_rpjpe")]
+[node name="Collectibles" type="Node" parent="." index="3"]
+
+[node name="EnemyDino" parent="." index="5" instance=ExtResource("3_rpjpe")]
 position = Vector2(432, -77)
 
-[node name="EnemyCrab" parent="." index="5" node_paths=PackedStringArray("patrol_points") instance=ExtResource("4_qb2f8")]
+[node name="EnemyCrab" parent="." index="6" node_paths=PackedStringArray("patrol_points") instance=ExtResource("4_qb2f8")]
 position = Vector2(232, -73)
 patrol_points = NodePath("PatrolPoints")
 
@@ -34,4 +37,7 @@ position = Vector2(-88, 8)
 [node name="Point2" type="Marker2D" parent="EnemyCrab/PatrolPoints" index="1"]
 position = Vector2(48, 8)
 
-[node name="GameScreen" parent="." index="6" instance=ExtResource("5_w5fau")]
+[node name="GameScreen" parent="." index="7" instance=ExtResource("5_w5fau")]
+
+[node name="BlueCoin" parent="." index="9" instance=ExtResource("7_xiqq2")]
+position = Vector2(93, -86)

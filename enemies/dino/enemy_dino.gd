@@ -1,2 +1,2 @@
 extends CharacterBody2D
-@export var damage_amount : int = 5
+@export var damage_amount : int = 2
