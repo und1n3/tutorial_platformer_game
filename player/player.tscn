@@ -296,6 +296,10 @@ _data = {
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 collision_layer = 2
 script = ExtResource("1_k7785")
+slow_down_speed = 2900
+jump_horizontal_speed = 500
+max_jump_horizontal_speed = 277
+jump_count = 2
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_rfga8")

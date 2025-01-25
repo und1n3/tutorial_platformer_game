@@ -4,7 +4,7 @@ extends Node
 
 
 func _on_attack_area_2d_body_entered(body : Node2D):
-	if body.is_in_group("Player"):
+	if body.is_in_group("Player") :
 		node_finite_state_machine.transition_to("attack")
 
 

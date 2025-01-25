@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://w6fka84tekwq"]
+[gd_scene load_steps=24 format=3 uid="uid://w6fka84tekwq"]
 
 [ext_resource type="Texture2D" uid="uid://dec3ajowb15y" path="res://enemies/dino/dino.png" id="1_njj7l"]
 [ext_resource type="Script" path="res://enemies/dino/enemy_dino.gd" id="1_s3d2n"]
@@ -110,6 +110,9 @@ radius = 11.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_0mqnn"]
 radius = 71.0282
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_vav2f"]
+radius = 15.0
+
 [node name="EnemyDino" type="CharacterBody2D" groups=["Enemy"]]
 collision_layer = 4
 collision_mask = 3
@@ -159,5 +162,15 @@ position = Vector2(0, -11)
 shape = SubResource("CircleShape2D_0mqnn")
 debug_color = Color(0.998217, 0.651615, 0.15013, 0.42)
 
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(0, -13)
+shape = SubResource("CircleShape2D_vav2f")
+debug_color = Color(0.85436, 0.273244, 0.628804, 0.42)
+
 [connection signal="body_entered" from="AttackArea2D" to="StateMachineController" method="_on_attack_area_2d_body_entered"]
 [connection signal="body_exited" from="AttackArea2D" to="StateMachineController" method="_on_attack_area_2d_body_exited"]
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
