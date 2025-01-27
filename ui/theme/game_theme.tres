@@ -84,6 +84,7 @@ Button/styles/focus = SubResource("StyleBoxFlat_qeskt")
 Button/styles/hover = SubResource("StyleBoxFlat_w8xdo")
 Button/styles/normal = SubResource("StyleBoxFlat_b6crp")
 Button/styles/pressed = SubResource("StyleBoxFlat_gs1r8")
+Label/fonts/font = ExtResource("1_po07r")
 MarginContainer/constants/margin_bottom = 10
 MarginContainer/constants/margin_left = 10
 MarginContainer/constants/margin_right = 10

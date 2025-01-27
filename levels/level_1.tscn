@@ -92,4 +92,4 @@ limit_top = -303
 limit_right = 1680
 limit_bottom = 0
 editor_draw_limits = true
-smoothing_enabled = true
+smoothing_distance = 5

@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://c8qgjq7p7r7b5"]
+[gd_scene load_steps=62 format=3 uid="uid://c8qgjq7p7r7b5"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_k7785"]
 [ext_resource type="Texture2D" uid="uid://y30kstpgvu4" path="res://player/player-idle.png" id="1_vfsdp"]
@@ -6,11 +6,29 @@
 [ext_resource type="Shader" uid="uid://yc3iibuemxek" path="res://player/player_hit_flash_shader.tres" id="2_u6jh4"]
 [ext_resource type="Texture2D" uid="uid://nsg2jsu42hfx" path="res://player/player-jump.png" id="3_bj7h7"]
 [ext_resource type="Texture2D" uid="uid://bbmel7ms3hwk0" path="res://player/player-run-shoot.png" id="5_h02ag"]
+[ext_resource type="Texture2D" uid="uid://cqwhowd8eimdv" path="res://player/player-duck.png" id="6_2fpdy"]
+[ext_resource type="Texture2D" uid="uid://dcyjd3bbh2ix1" path="res://player/player-stand.png" id="8_qyv5q"]
+[ext_resource type="Texture2D" uid="uid://xdaakp28ejpc" path="res://player/player-shoot-up.png" id="9_rx3vv"]
+[ext_resource type="Texture2D" uid="uid://c62v12skm1lvd" path="res://player/player-cling.png" id="10_fc06e"]
+[ext_resource type="Script" path="res://scripts/state_machine/node_finite_state_machine.gd" id="11_t7lwy"]
+[ext_resource type="Script" path="res://player/player_states/idle_state.gd" id="12_s0h5s"]
+[ext_resource type="Script" path="res://player/player_states/fall_state.gd" id="13_ig7yo"]
+[ext_resource type="Script" path="res://player/player_states/run_state.gd" id="14_j0qw0"]
+[ext_resource type="Script" path="res://player/player_states/jump_state.gd" id="15_dymt7"]
+[ext_resource type="Script" path="res://player/player_states/shoot_stand_state.gd" id="16_vaiqe"]
+[ext_resource type="Script" path="res://player/player_states/shoot_up_state.gd" id="17_t7kso"]
+[ext_resource type="Script" path="res://player/player_states/shoot_crouch_state.gd" id="18_ims32"]
+[ext_resource type="Script" path="res://player/player_states/shoot_run_state.gd" id="19_rlr70"]
+[ext_resource type="Script" path="res://player/player_states/shoot_wall_cling_state.gd" id="20_y22vn"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rfga8"]
 shader = ExtResource("2_u6jh4")
 shader_parameter/enabled = false
 shader_parameter/hit_color = Color(0.719462, 0.125923, 0.191643, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xvens"]
+atlas = ExtResource("2_e7jge")
+region = Rect2(400, 0, 80, 80)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jmitl"]
 atlas = ExtResource("1_vfsdp")
@@ -92,6 +110,10 @@ region = Rect2(640, 0, 80, 80)
 atlas = ExtResource("2_e7jge")
 region = Rect2(720, 0, 80, 80)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_xdrpt"]
+atlas = ExtResource("6_2fpdy")
+region = Rect2(0, 0, 80, 80)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_1vw2c"]
 atlas = ExtResource("5_h02ag")
 region = Rect2(0, 0, 80, 80)
@@ -132,11 +154,39 @@ region = Rect2(640, 0, 80, 80)
 atlas = ExtResource("5_h02ag")
 region = Rect2(720, 0, 80, 80)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_n0ghe"]
+atlas = ExtResource("8_qyv5q")
+region = Rect2(0, 0, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iv4xk"]
+atlas = ExtResource("8_qyv5q")
+region = Rect2(80, 0, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ppp2d"]
+atlas = ExtResource("8_qyv5q")
+region = Rect2(160, 0, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ix17g"]
+atlas = ExtResource("9_rx3vv")
+region = Rect2(0, 0, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c8tv3"]
+atlas = ExtResource("10_fc06e")
+region = Rect2(0, 0, 80, 80)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_w1jqg"]
 animations = [{
 "frames": [],
 "loop": true,
 "name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xvens")
+}],
+"loop": false,
+"name": &"fall",
 "speed": 5.0
 }, {
 "frames": [{
@@ -175,7 +225,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ax2gg")
 }],
-"loop": false,
+"loop": true,
 "name": &"jump",
 "speed": 12.0
 }, {
@@ -216,6 +266,14 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_xdrpt")
+}],
+"loop": false,
+"name": &"shoot_crouch",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_1vw2c")
 }, {
 "duration": 1.0,
@@ -246,91 +304,128 @@ animations = [{
 "texture": SubResource("AtlasTexture_q8vil")
 }],
 "loop": true,
-"name": &"run_shoot",
+"name": &"shoot_run",
 "speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n0ghe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iv4xk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ppp2d")
+}],
+"loop": true,
+"name": &"shoot_stand",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ix17g")
+}],
+"loop": false,
+"name": &"shoot_up",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c8tv3")
+}],
+"loop": false,
+"name": &"shoot_wall_cling",
+"speed": 5.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_54muw"]
-radius = 9.0
+radius = 8.0
 height = 42.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_q47og"]
 height = 40.0
 
-[sub_resource type="Animation" id="Animation_jkkql"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/enabled")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-
-[sub_resource type="Animation" id="Animation_fxu4q"]
-resource_name = "hit"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/enabled")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, false]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_51isi"]
-_data = {
-"RESET": SubResource("Animation_jkkql"),
-"hit": SubResource("Animation_fxu4q")
-}
-
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 collision_layer = 2
 script = ExtResource("1_k7785")
-slow_down_speed = 2900
-jump_horizontal_speed = 500
-max_jump_horizontal_speed = 277
-jump_count = 2
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_rfga8")
 position = Vector2(0, -24)
 sprite_frames = SubResource("SpriteFrames_w1jqg")
-animation = &"run_shoot"
+animation = &"shoot_wall_cling"
 autoplay = "idle"
-frame = 4
-frame_progress = 0.29882
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2(0, -21)
 shape = SubResource("CapsuleShape2D_54muw")
 
 [node name="Muzzle" type="Marker2D" parent="."]
-position = Vector2(17, -25)
+position = Vector2(4, -42)
 
 [node name="Hurtbox" type="Area2D" parent="."]
 collision_layer = 2
 collision_mask = 4
 
 [node name="HurtboxCollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
-visible = false
 position = Vector2(0, -21)
 shape = SubResource("CapsuleShape2D_q47og")
 debug_color = Color(0.950687, 0.0508384, 0.541402, 0.42)
 
-[node name="HitAnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_51isi")
-}
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_node_state")]
+script = ExtResource("11_t7lwy")
+initial_node_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("character_body_2d", "animated_sprite_2d")]
+script = ExtResource("12_s0h5s")
+character_body_2d = NodePath("../..")
+animated_sprite_2d = NodePath("../../AnimatedSprite2D")
+slow_down_speed = 400
+
+[node name="Fall" type="Node" parent="StateMachine" node_paths=PackedStringArray("character_body_2d", "animated_sprite_2d")]
+script = ExtResource("13_ig7yo")
+character_body_2d = NodePath("../..")
+animated_sprite_2d = NodePath("../../AnimatedSprite2D")
+
+[node name="Run" type="Node" parent="StateMachine" node_paths=PackedStringArray("character_body_2d", "animated_sprite_2d")]
+script = ExtResource("14_j0qw0")
+character_body_2d = NodePath("../..")
+animated_sprite_2d = NodePath("../../AnimatedSprite2D")
+
+[node name="Jump" type="Node" parent="StateMachine" node_paths=PackedStringArray("character_body_2d", "animated_sprite_2d")]
+script = ExtResource("15_dymt7")
+character_body_2d = NodePath("../..")
+animated_sprite_2d = NodePath("../../AnimatedSprite2D")
+max_jump_count = 2
+
+[node name="ShootStand" type="Node" parent="StateMachine" node_paths=PackedStringArray("character_body_2d", "animated_sprite_2d", "muzzle")]
+script = ExtResource("16_vaiqe")
+character_body_2d = NodePath("../..")
+animated_sprite_2d = NodePath("../../AnimatedSprite2D")
+muzzle = NodePath("../../Muzzle")
+
+[node name="ShootUp" type="Node" parent="StateMachine" node_paths=PackedStringArray("character_body_2d", "animated_sprite_2d", "muzzle")]
+script = ExtResource("17_t7kso")
+character_body_2d = NodePath("../..")
+animated_sprite_2d = NodePath("../../AnimatedSprite2D")
+muzzle = NodePath("../../Muzzle")
+
+[node name="ShootCrouch" type="Node" parent="StateMachine" node_paths=PackedStringArray("character_body_2d", "animated_sprite_2d", "muzzle")]
+script = ExtResource("18_ims32")
+character_body_2d = NodePath("../..")
+animated_sprite_2d = NodePath("../../AnimatedSprite2D")
+muzzle = NodePath("../../Muzzle")
+
+[node name="ShootRun" type="Node" parent="StateMachine" node_paths=PackedStringArray("character_body_2d", "animated_sprite_2d", "muzzle")]
+script = ExtResource("19_rlr70")
+character_body_2d = NodePath("../..")
+animated_sprite_2d = NodePath("../../AnimatedSprite2D")
+muzzle = NodePath("../../Muzzle")
+
+[node name="ShootWallCling" type="Node" parent="StateMachine" node_paths=PackedStringArray("character_body_2d", "animated_sprite_2d", "muzzle")]
+script = ExtResource("20_y22vn")
+character_body_2d = NodePath("../..")
+animated_sprite_2d = NodePath("../../AnimatedSprite2D")
+muzzle = NodePath("../../Muzzle")
 
 [connection signal="body_entered" from="Hurtbox" to="." method="_on_hurtbox_body_entered"]
